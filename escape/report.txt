@@ -1,0 +1,168 @@
+====================================================
+ESCAPE GAME - UCP ASSIGNMENT (SEMESTER 2, 2025)
+====================================================
+
+Name: M.V.R.Thirnaya Semindi K. Bandara
+Student ID: 22944368
+Unit: COS10009 / UCP 
+
+====================================================
+
+
+OVERVIEW
+----------------------------------------------------
+This project implements a simple terminal-based escape
+game written in C. The player moves through a map,
+avoids traps and water, and tries to reach the goal.
+The program demonstrates file I/O, gameplay logic,
+flood fill (water spreading), and an undo feature using
+a linked list. All requirements from the assignment
+specification are implemented.
+
+
+COMPILATION AND EXECUTION
+----------------------------------------------------
+To compile the program:
+    make clean
+    make
+
+To run the game:
+    ./escape map.txt
+
+Controls:
+    w - Move up
+    s - Move down
+    a - Move left
+    d - Move right
+    u - Undo last move
+
+
+FUNCTIONALITY SUMMARY
+----------------------------------------------------
+
+1. FILE I/O
+Files: map.c, map.h
+Functions: map_load(), map_get(), map_set(), map_free()
+Description:
+    Reads the map file (map.txt) with integers (0–6),
+    allocates memory dynamically, and stores the grid.
+    Player position and map dimensions are detected
+    automatically.
+Status: WORKING
+
+----------------------------------------------------
+
+2. GAME INTERFACE
+Files: game.c, util.c, color.c, terminal.c
+Functions: draw(), apply_tile_color_begin(),
+           apply_tile_color_end(), disableBuffer(),
+           enableBuffer()
+Description:
+    Displays the map with colored tiles:
+        Blue - Water (~)
+        Red  - Trap (@)
+        Green - Goal (G)
+    Clears terminal each frame for updated rendering.
+Status: FULLY FUNCTIONAL (minor flicker acceptable)
+
+----------------------------------------------------
+
+3. PLAYER MOVEMENT
+Files: game.c
+Functions: game_loop(), walkable()
+Description:
+    Player moves using WASD keys without pressing Enter.
+    Movement stops at walls, trapdoors, and map borders.
+Status: WORKING
+
+----------------------------------------------------
+
+4. TRAP INTERACTION
+Files: game.c
+Function: trigger_trap()
+Description:
+    Stepping on a trap (@) removes all traps and
+    trapdoors (X). Enables water-spreading mode.
+Status: WORKING
+
+----------------------------------------------------
+
+5. FLOOD FILL (WATER SPREAD)
+Files: game.c
+Function: flood_step()
+Description:
+    Implements a brute-force flood fill algorithm.
+    Water (~) spreads to adjacent empty spaces after
+    each player move once the trap is triggered.
+Status: WORKING
+
+----------------------------------------------------
+
+6. WIN / LOSE CONDITIONS
+Files: game.c, main.c
+Function: game_loop()
+Description:
+    - Win: Player reaches the Goal (G)
+    - Lose: Water reaches the Player
+Status: FULLY FUNCTIONAL
+
+----------------------------------------------------
+
+7. UNDO FEATURE (LINKED LIST)
+Files: ll.c, ll.h, game.c
+Functions: ll_push(), ll_pop_take(), ll_clear(),
+           make_state_blob(), restore_state_blob()
+Description:
+    Uses a generic linked list to store snapshots of
+    game states. Press 'u' to revert to the previous
+    state. Memory is freed correctly.
+Status: FULLY FUNCTIONAL AND MEMORY SAFE
+
+----------------------------------------------------
+
+8. CODING STANDARDS AND STRUCTURE
+- Makefile compiles with C89 standard (-std=c89)
+- No forbidden constructs:
+  (no exit(), goto, continue, or multiple returns)
+- Header guards in all .h files
+- Proper commenting and readable code
+- Dynamic memory managed correctly
+- Valgrind test: no memory leaks
+
+Status: FULLY COMPLIANT
+
+----------------------------------------------------
+
+KNOWN ISSUES
+----------------------------------------------------
+- Minor flicker due to system("clear") each frame
+- Terminal color appearance may differ by environment
+- No main menu (not required by specification)
+
+----------------------------------------------------
+
+FILE LIST
+----------------------------------------------------
+main.c       - Entry point and overall flow
+game.c/h     - Game logic, movement, flood, undo
+map.c/h      - Map loading and management
+ll.c/h       - Linked list for undo system
+util.c/h     - Tile symbols and color display
+color.c/h    - Color formatting using ANSI codes
+terminal.c/h - Keyboard input (no Enter)
+newSleep.c/h - Sleep delay for smooth animation
+Makefile     - Build instructions
+map.txt      - Example map file
+
+----------------------------------------------------
+
+SUMMARY
+----------------------------------------------------
+All required functionalities are implemented and tested.
+No memory leaks or coding standard violations detected.
+Game runs successfully under Ubuntu Linux.
+Meets all requirements stated in the marking criteria.
+
+Final Status: FULLY FUNCTIONAL AND COMPLETE
+====================================================
+
